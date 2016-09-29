@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'react-bootstrap';
 import FormInput from '../components/forms/FormInput';
+import { loadData } from '../actions/index';
 
 const validate = values => {
     const errors = {};
@@ -27,6 +28,10 @@ const doMySubmit = (event) => {
 }
 
 class MyForm extends React.Component {
+    componentDidMount() {
+        this.props.loadData();
+    }
+
     render() {
         const { handleSubmit, pristine, reset, submitting } = this.props;
 
@@ -43,11 +48,22 @@ class MyForm extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    initialValues: state.foo
+});
+
+const mapDispatchToProps = {
+    loadData
+}
+
 MyForm = reduxForm({
     form: 'myForm',
-    validate
+    validate,
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true,
+    destroyOnUnmount: false
 })(MyForm);
 
-MyForm = connect()(MyForm);
+MyForm = connect(mapStateToProps, mapDispatchToProps)(MyForm);
 
 export default MyForm;
