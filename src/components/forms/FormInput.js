@@ -23,8 +23,7 @@ class FormInput extends React.Component {
                         disabled={disabled}
                         onBlur={input.onBlur}
                         onFocus={input.onFocus}
-                        onChange={input.onChange}
-                        required />
+                        onChange={input.onChange} />
                     {validationHint}
                 </Col>
             </FormGroup>
@@ -44,7 +43,8 @@ FormInput.propTypes = {
         active: React.PropTypes.bool.isRequired,
         touched: React.PropTypes.bool.isRequired,
         error: React.PropTypes.string
-    }).isRequired
+    }).isRequired,
+    disabled: React.PropTypes.bool
 };
 
 export default FormInput;

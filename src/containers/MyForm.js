@@ -5,31 +5,55 @@ import { Form } from 'react-bootstrap';
 import FormInput from '../components/forms/FormInput';
 import { loadData } from '../actions/index';
 
+const validateUsername = (username) => {
+    let error;
+
+    if (!username) {
+        return 'Required';
+    } else if (username.length > 15) {
+        return 'Must be 15 characters or less';
+    }
+
+    return error;
+}
+
+const validateEmail = (email) => {
+    let error;
+
+    if (!email) {
+        return 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        return 'Invalid email address';
+    }
+
+    return error;
+}
+
+const fieldDefinitions = {
+    username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
+    email: { name: 'email', label: 'Email', type: 'text', disabled: false, required: true, component: FormInput, validate: validateEmail },
+    optionalField: { name: 'optionalField', label: 'Optional Field', type: 'text', disabled: false, required: false, component: FormInput },
+    disabledField: { name: 'disabledField', label: 'Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
+}
+
 const validate = values => {
     const errors = {};
 
-    if (!values.username) {
-        errors.username = 'Required'
-    } else if (values.username.length > 15) {
-        errors.username = 'Must be 15 characters or less'
-    }
+    Object.keys(fieldDefinitions).forEach((fieldName) => {
+        const fieldDefinition = fieldDefinitions[fieldName];
+        const value = values[fieldName];
+        const error = fieldDefinition.required ? fieldDefinition.validate(value) : null;
 
-    if (!values.email) {
-        errors.email = 'Required'
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-    }
+        if (error) {
+            errors[fieldName] = error;
+        }
+    });
 
     return errors;
 }
 
 const doMySubmit = (event) => {
     event.preventDefault();
-}
-
-const fields = {
-    username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput },
-    email: { name: 'email', label: 'Email', type: 'email', disabled: false, required: true, component: FormInput }
 }
 
 class MyForm extends React.Component {
@@ -42,8 +66,10 @@ class MyForm extends React.Component {
 
         return (
             <Form horizontal onSubmit={handleSubmit(doMySubmit)}>
-                <Field {...fields.username} />
-                <Field {...fields.email} />
+                <Field {...fieldDefinitions.username} />
+                <Field {...fieldDefinitions.email} />
+                <Field {...fieldDefinitions.optionalField} />
+                <Field {...fieldDefinitions.disabledField} />
                 <div>
                     <button type='submit' disabled={submitting}>Submit</button>
                     <button type='button' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
