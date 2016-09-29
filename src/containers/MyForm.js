@@ -4,30 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form } from 'react-bootstrap';
 import FormInput from '../components/forms/FormInput';
 import { loadData } from '../actions/index';
-
-const validateUsername = (username) => {
-    let error;
-
-    if (!username) {
-        return 'Required';
-    } else if (username.length > 15) {
-        return 'Must be 15 characters or less';
-    }
-
-    return error;
-}
-
-const validateEmail = (email) => {
-    let error;
-
-    if (!email) {
-        return 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-        return 'Invalid email address';
-    }
-
-    return error;
-}
+import { validateEmail, validateUsername } from '../lib/validation';
 
 const fieldDefinitions = {
     username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
