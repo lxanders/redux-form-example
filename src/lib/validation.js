@@ -1,3 +1,5 @@
+import isEmail from 'validator/lib/isEmail';
+
 const validateUsername = (username) => {
     let error;
 
@@ -15,7 +17,7 @@ const validateEmail = (email) => {
 
     if (!email) {
         return 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+    } else if(!isEmail(email)) {
         return 'Invalid email address';
     }
 
