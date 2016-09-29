@@ -22,7 +22,24 @@ const validateEmail = (email) => {
     return error;
 }
 
+const validate = (fieldDefinitions, values) => {
+    const errors = {};
+
+    Object.keys(fieldDefinitions).forEach((fieldName) => {
+        const fieldDefinition = fieldDefinitions[fieldName];
+        const value = values[fieldName];
+        const error = fieldDefinition.required ? fieldDefinition.validate(value) : null;
+
+        if (error) {
+            errors[fieldName] = error;
+        }
+    });
+
+    return errors;
+}
+
 export {
     validateEmail,
-    validateUsername
+    validateUsername,
+    validate
 }
