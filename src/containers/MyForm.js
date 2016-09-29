@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import FormInput from '../components/forms/FormInput';
 
 const validate = values => {
     const errors = {};
@@ -20,20 +21,6 @@ const validate = values => {
     return errors;
 }
 
-const renderField = ({ input, label, value, type, meta: { active, touched, error } }) => {
-    const errorMessage = !active && touched && error && <span>{error}</span>;
-
-    return (
-        <div>
-            <label>{label}</label>
-            <div>
-                <input {...input} onFocus={input.onFocus} placeholder={label} type={type}/>
-                {errorMessage}
-            </div>
-        </div>
-    );
-};
-
 const doMySubmit = (event) => {
     event.preventDefault();
 }
@@ -44,8 +31,8 @@ class MyForm extends React.Component {
 
         return (
             <form onSubmit={handleSubmit(doMySubmit)}>
-                <Field name='username' type='text' component={renderField} label='Username'/>
-                <Field name='email' type='email' component={renderField} label='Email'/>
+                <Field name='username' type='text' component={FormInput} label='Username'/>
+                <Field name='email' type='email' component={FormInput} label='Email'/>
                 <div>
                     <button type='submit' disabled={submitting}>Submit</button>
                     <button type='button' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
