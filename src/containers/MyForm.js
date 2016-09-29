@@ -27,6 +27,11 @@ const doMySubmit = (event) => {
     event.preventDefault();
 }
 
+const fields = {
+    username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput },
+    email: { name: 'email', label: 'Email', type: 'email', disabled: false, required: true, component: FormInput }
+}
+
 class MyForm extends React.Component {
     componentDidMount() {
         this.props.loadData();
@@ -37,8 +42,8 @@ class MyForm extends React.Component {
 
         return (
             <Form horizontal onSubmit={handleSubmit(doMySubmit)}>
-                <Field name='username' type='text' component={FormInput} label='Username' />
-                <Field name='email' type='email' component={FormInput} label='Email' />
+                <Field {...fields.username} />
+                <Field {...fields.email} />
                 <div>
                     <button type='submit' disabled={submitting}>Submit</button>
                     <button type='button' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
