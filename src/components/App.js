@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import MyForm from '../containers/MyForm';
+
 import logo from '../assets/logo.svg';
+
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 class App extends Component {

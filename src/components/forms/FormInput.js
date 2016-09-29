@@ -1,20 +1,33 @@
 import React from 'react';
+import { FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 
 class FormInput extends React.Component {
     render() {
-        const { input, label, type, meta: { active, touched, error } } = this.props;
-        const errorMessage = !active && touched && error && <span>{error}</span>;
-
-        console.log('was ist denn in input?', input);
+        const { input, label, type, disabled, meta: { active, touched, error } } = this.props;
+        const validationState = !active && touched && error ? 'error' : undefined;
+        const validationHint = validationState === 'error' ? <HelpBlock>{error}</HelpBlock> : null;
 
         return (
-            <div>
-                <label>{label}</label>
-                <div>
-                    <input {...input} onFocus={input.onFocus} placeholder={label} type={type}/>
-                    {errorMessage}
-                </div>
-            </div>
+            <FormGroup
+                controlId={input.name}
+                key={input.name}
+                validationState={validationState}>
+                <Col componentClass={ControlLabel} sm={2}>
+                    {label}
+                </Col>
+                <Col sm={10}>
+                    <FormControl
+                        type={type}
+                        value={input.value}
+                        placeholder={label}
+                        disabled={disabled}
+                        onBlur={input.onBlur}
+                        onFocus={input.onFocus}
+                        onChange={input.onChange}
+                        required />
+                    {validationHint}
+                </Col>
+            </FormGroup>
         );
     }
 }
@@ -31,7 +44,7 @@ FormInput.propTypes = {
         active: React.PropTypes.bool.isRequired,
         touched: React.PropTypes.bool.isRequired,
         error: React.PropTypes.string
-    })
+    }).isRequired
 };
 
 export default FormInput;

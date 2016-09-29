@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Form } from 'react-bootstrap';
 import FormInput from '../components/forms/FormInput';
 
 const validate = values => {
@@ -30,14 +31,14 @@ class MyForm extends React.Component {
         const { handleSubmit, pristine, reset, submitting } = this.props;
 
         return (
-            <form onSubmit={handleSubmit(doMySubmit)}>
-                <Field name='username' type='text' component={FormInput} label='Username'/>
-                <Field name='email' type='email' component={FormInput} label='Email'/>
+            <Form horizontal onSubmit={handleSubmit(doMySubmit)}>
+                <Field name='username' type='text' component={FormInput} label='Username' />
+                <Field name='email' type='email' component={FormInput} label='Email' />
                 <div>
                     <button type='submit' disabled={submitting}>Submit</button>
                     <button type='button' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
                 </div>
-            </form>
+            </Form>
         );
     }
 }
