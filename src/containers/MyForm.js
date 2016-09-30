@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import FormInput from '../components/forms/FormInput';
 import { fetchDemoData, storeDemoData } from '../actions/index';
@@ -34,14 +34,14 @@ class MyForm extends React.Component {
                 <Field {...fieldDefinitions.optionalField} />
                 <Field {...fieldDefinitions.disabledField} />
                 <div>
-                    <button type='submit' disabled={submitting}>
-                        {submitting ? <FontAwesome name='spinner' spin /> : null}
-                        {submitSucceeded ? <FontAwesome name='check' /> : null}
-                        {submitting || submitSucceeded ? ' Store data' : 'Store data'}
-                    </button>
-                    <button type='button' disabled={pristine || submitting} onClick={reset}>
-                        Reset values
-                    </button>
+                    <Button className='pull-left' bsStyle='primary' type='submit' disabled={submitting}>
+                        {submitting ? <span><FontAwesome name='spinner' spin />&nbsp;</span> : null}
+                        {submitSucceeded ? <span><FontAwesome name='check' />&nbsp;</span> : null}
+                        Store data
+                    </Button>
+                    <Button className='pull-right' bsStyle='warning' disabled={pristine || submitting} onClick={reset}>
+                        Reset data
+                    </Button>
                 </div>
             </Form>
         );
