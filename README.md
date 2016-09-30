@@ -1,3 +1,23 @@
+# redux-form-example
+
+This is a small demo project initially meant as a playground for myself to get up and running with
+[redux-form](http://redux-form.com/) (version 6). Additionally I wanted to try out
+[create-react-app](https://github.com/facebookincubator/create-react-app).
+
+It was a very pleasant experiment!
+
+**Warning:** This will not get much attention from my side in the future and will most likely not be maintained. 
+As it might still have some value I will still keep it online.
+
+Some other libs used:
+
+* react-bootstrap
+* font-awesome
+
+-----
+
+# Original Create React App documentation
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.  
