@@ -3,11 +3,11 @@
     "version": "0.0.0",
     "private": true,
     "devDependencies": {
+        "bootstrap": "3.3.7",
         "font-awesome": "4.6.3",
         "react-scripts": "0.6.1"
     },
     "dependencies": {
-        "bootstrap": "3.3.7",
         "react": "15.3.2",
         "react-bootstrap": "0.30.3",
         "react-dom": "15.3.2",
