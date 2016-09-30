@@ -4,8 +4,9 @@ import { Field, reduxForm } from 'redux-form';
 import { Form } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import FormInput from '../components/forms/FormInput';
-import { loadData, saveData } from '../actions/index';
+import { fetchDemoData, storeDemoData } from '../actions/index';
 import { validateEmail, validateUsername, validate } from '../lib/validation';
+import { getDemoData } from '../reducers/index';
 
 const fieldDefinitions = {
     username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
@@ -16,11 +17,11 @@ const fieldDefinitions = {
 
 class MyForm extends React.Component {
     componentDidMount() {
-        this.props.loadData();
+        this.props.fetchDemoData();
     }
 
     saveFormData(data) {
-        return this.props.saveData(data);
+        return this.props.storeDemoData(data);
     }
 
     render() {
@@ -48,12 +49,12 @@ class MyForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    initialValues: state.foo
+    initialValues: getDemoData(state)
 });
 
 const mapDispatchToProps = {
-    loadData,
-    saveData
+    fetchDemoData,
+    storeDemoData
 }
 
 MyForm = reduxForm({

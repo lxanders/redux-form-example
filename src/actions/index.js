@@ -1,43 +1,34 @@
 const types = {
-    FOO_LOAD_REQUEST: 'FOO_LOAD_REQUEST',
-    FOO_LOAD_SUCCESS: 'FOO_LOAD_SUCCESS',
-    FOO_LOAD_FAILURE: 'FOO_LOAD_FAILURE',
-    FOO_SAVE_REQUEST: 'FOO_SAVE_REQUEST',
-    FOO_SAVE_SUCCESS: 'FOO_SAVE_SUCCESS',
-    FOO_SAVE_FAILURE: 'FOO_SAVE_FAILURE'
+    FETCH_DEMODATA_REQUEST: 'FETCH_DEMODATA_REQUEST',
+    FETCH_DEMODATA_SUCCESS: 'FETCH_DEMODATA_SUCCESS',
+    FETCH_DEMODATA_FAILURE: 'FETCH_DEMODATA_FAILURE',
+    STORE_DEMODATA_REQUEST: 'STORE_DEMODATA_REQUEST',
+    STORE_DEMODATA_SUCCESS: 'STORE_DEMODATA_SUCCESS',
+    STORE_DEMODATA_FAILURE: 'STORE_DEMODATA_FAILURE'
 }
 
-const loadData = () => {
-    return (dispatch) => {
-        dispatch({ type: types.FOO_LOAD_REQUEST });
+const fetchDemoData = () => {
+    return (dispatch, getState, services) => {
+        dispatch({ type: types.FETCH_DEMODATA_REQUEST });
 
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const fooFakeData = {
-                    username: 'anyUsername',
-                    email: 'anyEmail@test.com'
-                };
-
-                return resolve(dispatch({ type: types.FOO_LOAD_SUCCESS, fooData: fooFakeData }));
-            }, 3000);
-        });
+        return services.fetchDemoData()
+        .then((data) => dispatch({ type: types.FETCH_DEMODATA_SUCCESS, data }))
+        .catch((error) => dispatch({ type: types.FETCH_DEMODATA_FAILURE, error }));
     };
 };
 
-const saveData = (data) => {
-    return (dispatch) => {
-        dispatch({ type: types.FOO_SAVE_REQUEST, data });
+const storeDemoData = (data) => {
+    return (dispatch, getState, services) => {
+        dispatch({ type: types.STORE_DEMODATA_REQUEST });
 
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                return resolve(dispatch({ type: types.FOO_SAVE_SUCCESS }));
-            }, 3000);
-        });
+        return services.storeDemoData(data)
+        .then(() => dispatch({ type: types.STORE_DEMODATA_SUCCESS }))
+        .catch((error) => dispatch({ type: types.STORE_DEMODATA_FAILURE, error }));
     };
 }
 
 export {
     types,
-    loadData,
-    saveData
+    fetchDemoData,
+    storeDemoData
 };
