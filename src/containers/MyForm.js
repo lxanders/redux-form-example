@@ -24,7 +24,7 @@ class MyForm extends React.Component {
     }
 
     render() {
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const { handleSubmit, pristine, reset, submitting, submitSucceeded } = this.props;
 
         return (
             <Form horizontal onSubmit={handleSubmit(this.saveFormData.bind(this))}>
@@ -34,10 +34,12 @@ class MyForm extends React.Component {
                 <Field {...fieldDefinitions.disabledField} />
                 <div>
                     <button type='submit' disabled={submitting}>
-                        {submitting ? <FontAwesome name='spinner' spin /> : 'Submit'}
+                        {submitting ? <FontAwesome name='spinner' spin /> : null}
+                        {submitSucceeded ? <FontAwesome name='check' /> : null}
+                        {submitting || submitSucceeded ? ' Store data' : 'Store data'}
                     </button>
                     <button type='button' disabled={pristine || submitting} onClick={reset}>
-                        Clear Values
+                        Reset values
                     </button>
                 </div>
             </Form>
