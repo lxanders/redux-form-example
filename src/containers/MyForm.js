@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import Loader from 'react-loader';
 import FormInput from '../components/forms/FormInput';
 import { fetchDemoData, storeDemoData } from '../actions/index';
 import { validateEmail, validateUsername, validate } from '../lib/validation';
-import { getDemoData } from '../reducers/index';
+import { getDemoData, isFetching } from '../reducers/index';
 
 const fieldDefinitions = {
     username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
@@ -25,7 +26,18 @@ class MyForm extends React.Component {
     }
 
     render() {
-        const { handleSubmit, pristine, reset, submitting, submitSucceeded } = this.props;
+        const {
+            isFetching : isFetchingDemoData,
+            handleSubmit,
+            pristine,
+            reset,
+            submitting,
+            submitSucceeded
+        } = this.props;
+
+        if (isFetchingDemoData) {
+            return <Loader />
+        }
 
         return (
             <Form horizontal onSubmit={handleSubmit(this.saveFormData.bind(this))}>
@@ -49,7 +61,8 @@ class MyForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    initialValues: getDemoData(state)
+    initialValues: getDemoData(state),
+    isFetching: isFetching(state)
 });
 
 const mapDispatchToProps = {
