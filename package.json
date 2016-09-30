@@ -1,6 +1,6 @@
 {
-    "name": "test-redux-form",
-    "version": "0.1.0",
+    "name": "redux-form-example",
+    "version": "0.0.0",
     "private": true,
     "devDependencies": {
         "font-awesome": "4.6.3",
