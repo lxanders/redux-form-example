@@ -3,6 +3,7 @@ import MyForm from '../containers/MyForm';
 
 import logo from '../assets/logo.svg';
 
+import 'font-awesome/css/font-awesome.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
