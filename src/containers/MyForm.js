@@ -6,8 +6,9 @@ import FontAwesome from 'react-fontawesome';
 import Loader from 'react-loader';
 import FormInput from '../components/forms/FormInput';
 import FormSelect from '../components/forms/FormSelect';
+import FormCheckbox from '../components/forms/FormCheckbox';
 import { fetchDemoData, storeDemoData } from '../actions/index';
-import { validateText, validateSelect, validateEmail, validateUsername, validate } from '../lib/validation';
+import { validateText, validateSelect, validateCheckbox, validateEmail, validateUsername, validate } from '../lib/validation';
 import { getDemoData, isFetching } from '../reducers/index';
 
 const options = [
@@ -20,6 +21,7 @@ const generalFieldDefinitions = [
     { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
     { name: 'email', label: 'Email', type: 'text', disabled: false, required: true, component: FormInput, validate: validateEmail },
     { name: 'selectSomething', label: 'Select Something', options, disabled: false, required: true, component: FormSelect, validate: validateSelect },
+    { name: 'someCheckbox', label: 'Required Checkbox', type: 'checkbox', checked: true, disabled: false, required: true, component: FormCheckbox, validate: validateCheckbox }
 ];
 
 const additionalFieldDefinitions = [
@@ -109,6 +111,7 @@ const mapStateToProps = (state) => ({
         {},
         getDemoData(state),
         { selectSomething: 'option1' },
+        { someCheckbox: true }
     ),
     isFetching: isFetching(state)
 });

@@ -4,6 +4,8 @@ const validateText = (text) => !text || text.length === 0 ? 'Required' : undefin
 
 const validateSelect = (selectedValue) => !selectedValue || selectedValue === '' ? 'Select a value' : undefined;
 
+const validateCheckbox = (checked) => !checked ? 'This Checkbox is required' : undefined;
+
 const validateUsername = (username) => {
     let error;
 
@@ -45,6 +47,7 @@ const validate = (fieldDefinitions, values) => {
 
 export {
     validateText,
+    validateCheckbox,
     validateSelect,
     validateEmail,
     validateUsername,

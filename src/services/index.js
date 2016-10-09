@@ -3,7 +3,8 @@ const fetchDemoData = () => {
         setTimeout(() => {
             const demoDataMock = {
                 username: 'anyUsername',
-                email: 'anyEmail@test.com'
+                email: 'anyEmail@test.com',
+                someCheckbox: true
             };
 
             return resolve(demoDataMock);
