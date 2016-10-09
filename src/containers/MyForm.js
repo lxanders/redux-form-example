@@ -17,7 +17,7 @@ const generalFieldDefinitions = {
 };
 
 const additionalFieldDefinitions = {
-    anyDisabledField: { name: 'anyDisabledField', label: 'Any Disabled Field', type: 'text', disabled: true, required: false, component: FormInput, validate: validateText },
+    anyDisabledField: { name: 'anyDisabledField', label: 'Any Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
     otherRequiredField: { name: 'otherRequiredField', label: 'Other Required Field', type: 'text', disabled: false, required: true, component: FormInput, validate: validateText }
 };
 
