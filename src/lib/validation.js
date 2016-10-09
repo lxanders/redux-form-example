@@ -4,9 +4,9 @@ const validateUsername = (username) => {
     let error;
 
     if (!username) {
-        return 'Required';
+        error = 'Required';
     } else if (username.length > 15) {
-        return 'Must be 15 characters or less';
+        error = 'Must be 15 characters or less';
     }
 
     return error;
@@ -16,9 +16,9 @@ const validateEmail = (email) => {
     let error;
 
     if (!email) {
-        return 'Required';
+        error = 'Required';
     } else if(!isEmail(email)) {
-        return 'Invalid email address';
+        error = 'Invalid email address';
     }
 
     return error;
