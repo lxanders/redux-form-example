@@ -2,6 +2,8 @@ import isEmail from 'validator/lib/isEmail';
 
 const validateText = (text) => !text || text.length === 0 ? 'Required' : undefined;
 
+const validateSelect = (selectedValue) => !selectedValue || selectedValue === '' ? 'Select a value' : undefined;
+
 const validateUsername = (username) => {
     let error;
 
@@ -43,6 +45,7 @@ const validate = (fieldDefinitions, values) => {
 
 export {
     validateText,
+    validateSelect,
     validateEmail,
     validateUsername,
     validate

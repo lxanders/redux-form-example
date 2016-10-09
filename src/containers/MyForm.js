@@ -5,19 +5,26 @@ import { Form, Button, Checkbox } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Loader from 'react-loader';
 import FormInput from '../components/forms/FormInput';
+import FormSelect from '../components/forms/FormSelect';
 import { fetchDemoData, storeDemoData } from '../actions/index';
-import { validateText, validateEmail, validateUsername, validate } from '../lib/validation';
+import { validateText, validateSelect, validateEmail, validateUsername, validate } from '../lib/validation';
 import { getDemoData, isFetching } from '../reducers/index';
+
+const options = [
+    { value: '', label: 'Select Something' },
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+];
 
 const generalFieldDefinitions = [
     { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
     { name: 'email', label: 'Email', type: 'text', disabled: false, required: true, component: FormInput, validate: validateEmail },
-    { name: 'optionalField', label: 'Optional Field', type: 'text', disabled: false, required: false, component: FormInput },
-    { name: 'disabledField', label: 'Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
+    { name: 'selectSomething', label: 'Select Something', options, disabled: false, required: true, component: FormSelect, validate: validateSelect },
 ];
 
 const additionalFieldDefinitions = [
-    { name: 'anyDisabledField', label: 'Any Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
+    { name: 'optionalField', label: 'Optional Field', type: 'text', disabled: false, required: false, component: FormInput },
+    { name: 'disabledField', label: 'Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
     { name: 'otherRequiredField', label: 'Other Required Field', type: 'text', disabled: false, required: true, component: FormInput, validate: validateText }
 ];
 
@@ -32,7 +39,6 @@ const renderGeneralFormFields = () => (
 const renderAdditionalFormFields = () => (
     <div>{additionalFieldDefinitions.map((fieldDefinition) => renderField(fieldDefinition))}</div>
 );
-
 
 class MyForm extends React.Component {
     constructor(props) {
@@ -99,7 +105,11 @@ class MyForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    initialValues: getDemoData(state),
+    initialValues: Object.assign(
+        {},
+        getDemoData(state),
+        { selectSomething: 'option1' },
+    ),
     isFetching: isFetching(state)
 });
 
