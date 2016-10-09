@@ -1,5 +1,7 @@
 import isEmail from 'validator/lib/isEmail';
 
+const validateText = (text) => !text || text.length === 0 ? 'Required' : undefined;
+
 const validateUsername = (username) => {
     let error;
 
@@ -41,6 +43,7 @@ const validate = (fieldDefinitions, values) => {
 }
 
 export {
+    validateText,
     validateEmail,
     validateUsername,
     validate
