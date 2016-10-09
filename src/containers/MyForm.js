@@ -9,29 +9,30 @@ import { fetchDemoData, storeDemoData } from '../actions/index';
 import { validateText, validateEmail, validateUsername, validate } from '../lib/validation';
 import { getDemoData, isFetching } from '../reducers/index';
 
-const generalFieldDefinitions = {
-    username: { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
-    email: { name: 'email', label: 'Email', type: 'text', disabled: false, required: true, component: FormInput, validate: validateEmail },
-    optionalField: { name: 'optionalField', label: 'Optional Field', type: 'text', disabled: false, required: false, component: FormInput },
-    disabledField: { name: 'disabledField', label: 'Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
-};
+const generalFieldDefinitions = [
+    { name: 'username', label: 'Username', type: 'text', disabled: false, required: true, component: FormInput, validate: validateUsername },
+    { name: 'email', label: 'Email', type: 'text', disabled: false, required: true, component: FormInput, validate: validateEmail },
+    { name: 'optionalField', label: 'Optional Field', type: 'text', disabled: false, required: false, component: FormInput },
+    { name: 'disabledField', label: 'Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
+];
 
-const additionalFieldDefinitions = {
-    anyDisabledField: { name: 'anyDisabledField', label: 'Any Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
-    otherRequiredField: { name: 'otherRequiredField', label: 'Other Required Field', type: 'text', disabled: false, required: true, component: FormInput, validate: validateText }
-};
+const additionalFieldDefinitions = [
+    { name: 'anyDisabledField', label: 'Any Disabled Field', type: 'text', disabled: true, required: false, component: FormInput },
+    { name: 'otherRequiredField', label: 'Other Required Field', type: 'text', disabled: false, required: true, component: FormInput, validate: validateText }
+];
 
-const getFieldDefinitionsAsArray = (fieldDefinitions) => {
-    return Object.keys(fieldDefinitions).map((fieldDefinition) => fieldDefinitions[fieldDefinition]);
-};
+const allFieldDefinitions = [ ...generalFieldDefinitions, ...additionalFieldDefinitions ];
 
-const renderFormFields = (fieldDefinitions) => {
-    return (
-        <div>
-            {fieldDefinitions.map((fieldDefinition) => <Field key={fieldDefinition.name} {...fieldDefinition} />)}
-        </div>
-    );
-};
+const renderField = (fieldDefinition) => <Field key={fieldDefinition.name} {...fieldDefinition} />;
+
+const renderGeneralFormFields = () => (
+    <div>{generalFieldDefinitions.map((fieldDefinition) => renderField(fieldDefinition))}</div>
+);
+
+const renderAdditionalFormFields = () => (
+    <div>{additionalFieldDefinitions.map((fieldDefinition) => renderField(fieldDefinition))}</div>
+);
+
 
 class MyForm extends React.Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class MyForm extends React.Component {
             <Form horizontal onSubmit={handleSubmit(this.saveFormData.bind(this))}>
                 <FieldArray
                     name='generalFields'
-                    component={() => renderFormFields(getFieldDefinitionsAsArray(generalFieldDefinitions))} />
+                    component={renderGeneralFormFields} />
                 <Checkbox
                     checked={showAdditionalFields}
                     onChange={() => this.toggleAdditionalFields()}>
@@ -81,7 +82,7 @@ class MyForm extends React.Component {
                 {showAdditionalFields ?
                     <FieldArray
                         name='additionalFields'
-                        component={() => renderFormFields(getFieldDefinitionsAsArray(additionalFieldDefinitions))} /> :
+                        component={renderAdditionalFormFields} /> :
                     null
                 }
                 <Button className='pull-left' bsStyle='primary' type='submit' disabled={submitting}>
@@ -109,7 +110,7 @@ const mapDispatchToProps = {
 
 MyForm = reduxForm({
     form: 'myForm',
-    validate: validate.bind(null, Object.assign({}, generalFieldDefinitions, additionalFieldDefinitions)),
+    validate: validate.bind(null, allFieldDefinitions),
     enableReinitialize: true,
     keepDirtyOnReinitialize: true,
     destroyOnUnmount: false

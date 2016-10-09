@@ -12,7 +12,7 @@ const validateUsername = (username) => {
     }
 
     return error;
-}
+};
 
 const validateEmail = (email) => {
     let error;
@@ -24,23 +24,22 @@ const validateEmail = (email) => {
     }
 
     return error;
-}
+};
 
 const validate = (fieldDefinitions, values) => {
     const errors = {};
 
-    Object.keys(fieldDefinitions).forEach((fieldName) => {
-        const fieldDefinition = fieldDefinitions[fieldName];
-        const value = values[fieldName];
+    fieldDefinitions.forEach((fieldDefinition) => {
+        const value = values[fieldDefinition.name];
         const error = fieldDefinition.required ? fieldDefinition.validate(value) : null;
 
         if (error) {
-            errors[fieldName] = error;
+            errors[fieldDefinition.name] = error;
         }
     });
 
     return errors;
-}
+};
 
 export {
     validateText,
