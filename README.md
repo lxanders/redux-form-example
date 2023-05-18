@@ -1,4 +1,4 @@
-# redux-form-example
+# Deprecated: redux-form-example
 
 This is a small demo project initially meant as a playground for myself to get up and running with
 [redux-form](http://redux-form.com/) (version 6). Additionally I wanted to try out
